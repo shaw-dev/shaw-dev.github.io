@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>World Builder - Unity HTML5/WebGL Player</title>
+
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+    <script src="TemplateData/UnityProgress.js"></script>  
+    <script src="Build/UnityLoader.js"></script>
+
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/World-Builder_web.json", {onProgress: UnityProgress});
+    </script>
+
+    <script>
+        <!--
+        function breakOut() 
+            //{ if (window != top) top.location.href = location.href; }
+            { if (window != top) window.open(location.href); }
+
+        //-->
+    </script>
+
+  </head>
+
+
+
+  <body style="background-color: #000000; text-align: center;" onLoad="breakOut();">
+
+    <div class="webgl-content">
+      <div id="unityContainer" style="background-color: #000000; text-align: center; margin: auto; width: 960px; height: 600px; border: 0; padding: 0;"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">World Builder</div>
+      </div>
+    </div>
+
+  </body>
+
+
+
+</html>

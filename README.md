@@ -1,0 +1,1 @@
+This is the source for my personal portfolio at [shaw-dev.github.io](https://shaw-dev.github.io), hand-built as a single HTML file with no frameworks or build step. It is deployed via GitHub Pages directly from the `main` branch.
