@@ -1,50 +1,839 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaw Chouhan — Systems & Software Engineer</title>
+<meta name="description" content="Shaurya (Shaw) Chouhan — new grad engineer working from logic gates to LLMs. FPGA design, systems programming, backend APIs, and ML research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   shaw.dev — design tokens
+   palette: dev-board dark + LED amber
+   type:    Archivo (display/body) + IBM Plex Mono (utility)
+   ============================================================ */
+:root {
+  --bg:        #0c0e12;
+  --surface:   #12151b;
+  --surface-2: #161a22;
+  --line:      #222835;
+  --text:      #e7eaf0;
+  --muted:     #8a93a3;
+  --faint:     #5b6372;
+  --amber:     #f2a33c;
+  --amber-soft: rgba(242, 163, 60, 0.12);
+  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --sans: 'Archivo', -apple-system, system-ui, sans-serif;
+  --maxw: 1080px;
+}
 
-<html lang="en-us">
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <head>
+html { scroll-behavior: smooth; }
 
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
 
-    <title>World Builder - Unity HTML5/WebGL Player</title>
+::selection { background: var(--amber); color: #0c0e12; }
 
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
+a { color: inherit; }
 
-    <script src="TemplateData/UnityProgress.js"></script>  
-    <script src="Build/UnityLoader.js"></script>
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-    <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/World-Builder_web.json", {onProgress: UnityProgress});
-    </script>
+/* ---------- nav ---------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(12, 14, 18, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text);
+  white-space: nowrap;
+}
+.nav-logo .amp { color: var(--amber); }
+.nav-links {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--amber); }
+.nav-links a .addr { color: var(--faint); margin-right: 4px; }
+.nav-links a:hover .addr { color: var(--amber); }
 
-    <script>
-        <!--
-        function breakOut() 
-            //{ if (window != top) top.location.href = location.href; }
-            { if (window != top) window.open(location.href); }
+/* ---------- hero ---------- */
+header {
+  padding: 96px 0 110px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+/* faint pcb-trace grid, barely there */
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.18;
+  mask-image: radial-gradient(ellipse 80% 70% at 30% 20%, black 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 20%, black 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; }
+.boot {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--faint);
+  margin-bottom: 36px;
+  min-height: 66px;
+}
+.boot .ln { display: block; }
+.boot .t { color: var(--amber); }
+.boot .ok { color: var(--muted); }
+.boot .cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--amber);
+  vertical-align: -2px;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
 
-        //-->
-    </script>
+h1 {
+  font-size: clamp(44px, 8vw, 84px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin-bottom: 22px;
+}
+.tagline {
+  font-size: clamp(20px, 3vw, 27px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  max-width: 620px;
+  margin-bottom: 14px;
+}
+.tagline em {
+  font-style: normal;
+  color: var(--amber);
+}
+.hero-sub {
+  color: var(--muted);
+  max-width: 580px;
+  margin-bottom: 40px;
+}
+.hero-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  text-decoration: none;
+  padding: 11px 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  background: var(--surface);
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.btn:hover, .btn:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #0c0e12;
+  font-weight: 500;
+}
+.btn-primary:hover, .btn-primary:focus-visible {
+  color: #0c0e12;
+  filter: brightness(1.08);
+}
 
-  </head>
+/* ---------- sections ---------- */
+section { padding: 88px 0; border-bottom: 1px solid var(--line); }
+section:last-of-type { border-bottom: none; }
 
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 44px;
+}
+.sec-addr {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--amber);
+  background: var(--amber-soft);
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.sec-title {
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
 
+/* ---------- about ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.about-text p { margin-bottom: 18px; }
+.about-text p:last-child { margin-bottom: 0; }
+.edu-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px;
+}
+.edu-card .label {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 12px;
+}
+.edu-card .school { font-weight: 600; margin-bottom: 4px; }
+.edu-card .degree { color: var(--muted); font-size: 15px; margin-bottom: 12px; }
+.edu-card .meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--faint);
+  line-height: 1.9;
+}
 
-  <body style="background-color: #000000; text-align: center;" onLoad="breakOut();">
+/* ---------- experience ---------- */
+.xp {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  padding: 30px 0;
+  border-top: 1px solid var(--line);
+}
+.xp:first-of-type { border-top: none; padding-top: 0; }
+.xp-when {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--faint);
+  padding-top: 4px;
+}
+.xp-role { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+.xp-org { color: var(--amber); font-weight: 500; }
+a.xp-org:hover, a.xp-org:focus-visible { text-decoration: underline !important; }
+.xp ul { list-style: none; margin-top: 12px; }
+.xp li {
+  color: var(--muted);
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 8px;
+  font-size: 15.5px;
+}
+.xp li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+  font-family: var(--mono);
+}
+.xp li strong { color: var(--text); font-weight: 600; }
 
-    <div class="webgl-content">
-      <div id="unityContainer" style="background-color: #000000; text-align: center; margin: auto; width: 960px; height: 600px; border: 0; padding: 0;"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-        <div class="title">World Builder</div>
+/* ---------- projects ---------- */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+.proj {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.proj:hover {
+  border-color: #3a4253;
+  transform: translateY(-3px);
+}
+.proj-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.proj h3 { font-size: 17.5px; font-weight: 600; letter-spacing: -0.01em; }
+.proj-domain {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--amber);
+  white-space: nowrap;
+}
+.proj p { color: var(--muted); font-size: 15px; flex-grow: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+.proj-link {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--faint);
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color 0.15s ease;
+}
+.proj-link:hover, .proj-link:focus-visible { color: var(--amber); }
+
+/* ---------- research ---------- */
+.res-grid { display: grid; gap: 16px; }
+.res-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px 26px;
+}
+.res-kind {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--amber);
+  padding-top: 3px;
+}
+.res-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.01em; }
+.res-item p { color: var(--muted); font-size: 15px; }
+
+/* ---------- skills (register map) ---------- */
+.skills-note {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--faint);
+  margin: -28px 0 32px;
+}
+.reg-map {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.reg {
+  display: grid;
+  grid-template-columns: 90px 150px 1fr;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 26px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  transition: background 0.15s ease;
+}
+.reg:first-child { border-top: none; }
+.reg:hover { background: var(--surface-2); }
+.reg-addr {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--amber);
+}
+.reg-name {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.reg-bits { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- contact ---------- */
+.contact-inner { max-width: 560px; }
+.contact-inner p { color: var(--muted); margin-bottom: 28px; }
+.contact-rows { display: grid; gap: 10px; }
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--text);
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.contact-row:hover, .contact-row:focus-visible { border-color: var(--amber); color: var(--amber); }
+.contact-row .k { color: var(--faint); min-width: 84px; }
+.contact-row:hover .k { color: var(--amber); }
+
+/* ---------- footer ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0 40px;
+}
+.foot-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+}
+
+/* ---------- reveal animation ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .boot .cursor { animation: none; }
+  * { transition: none !important; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 800px) {
+  .nav-links { gap: 14px; }
+  .nav-links li:nth-child(n+5) { display: none; }
+  header { padding: 64px 0 72px; }
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .xp { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+  .res-item { grid-template-columns: 1fr; gap: 8px; }
+  .reg { grid-template-columns: 72px 1fr; row-gap: 10px; padding: 16px 18px; }
+  .reg-bits { grid-column: 1 / -1; }
+  section { padding: 64px 0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#top">shaw<span class="amp">@</span>austin:~$</a>
+    <ul class="nav-links">
+      <li><a href="#about"><span class="addr">0x00</span>about</a></li>
+      <li><a href="#experience"><span class="addr">0x04</span>experience</a></li>
+      <li><a href="#projects"><span class="addr">0x08</span>projects</a></li>
+      <li><a href="#research"><span class="addr">0x0C</span>research</a></li>
+      <li><a href="#skills"><span class="addr">0x10</span>skills</a></li>
+      <li><a href="#contact"><span class="addr">0x14</span>contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero-inner">
+    <div class="boot" id="boot" aria-hidden="true"></div>
+    <h1>Shaw Chouhan</h1>
+    <p class="tagline">I build systems from <em>logic gates</em> to <em>LLMs</em>.</p>
+    <p class="hero-sub">New grad engineer comfortable anywhere in the stack — RTL on an FPGA, a custom allocator in C, or a retrieval pipeline running in production.</p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="mailto:shauryachauhan1111@gmail.com">get in touch</a>
+      <a class="btn" href="https://github.com/shaw-dev" target="_blank" rel="noopener">github</a>
+      <a class="btn" href="https://linkedin.com/in/shaurya-chauhan10" target="_blank" rel="noopener">linkedin</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-addr">0x00</span>
+      <h2 class="sec-title">About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm Shaw — a computer science grad from Penn State who never picked a lane. I've written Verilog for FPGA accelerators, a memory allocator in C, backend APIs that held sub‑200ms under 500+ concurrent users, and a RAG system that processes 1,500+ documents a day.</p>
+        <p>I like the problems where hardware and software have to agree with each other — the boundary layers most people avoid. Currently in Austin, TX, looking for new grad software or systems engineering roles.</p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="label">Education</div>
+        <div class="school">Penn State University</div>
+        <div class="degree">B.S. Computer Science<br>Minor, Computer Engineering</div>
+        <div class="meta">
+          graduated: May 2025<br>
+          gpa: 3.3 / 4.0 · Dean's List
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-addr">0x04</span>
+      <h2 class="sec-title">Experience</h2>
+    </div>
+
+    <div class="xp reveal">
+      <div class="xp-when">Aug — Dec 2024<br>Remote</div>
+      <div>
+        <div class="xp-role">AI Guidebook Developer · <span class="xp-org">ISSIP</span></div>
+        <ul>
+          <li>Built an LLM-based RAG knowledge retrieval system processing <strong>1,500+ documents per day</strong></li>
+          <li>Set up CI/CD with Docker and GitHub Actions, cutting release cycles from <strong>hours to ~15 minutes</strong></li>
+          <li>Designed the preprocessing and embedding workflows behind the retrieval layer</li>
+        </ul>
       </div>
     </div>
 
-  </body>
+    <div class="xp reveal">
+      <div class="xp-when">Jul 2024 — Apr 2025<br>University Park, PA</div>
+      <div>
+        <div class="xp-role">Research Programming Assistant · <span class="xp-org">Penn State IE Department</span></div>
+        <ul>
+          <li>Modified a PCA algorithm for <strong>high-dimensional healthcare datasets</strong> in Python with scikit-learn</li>
+          <li>Presented findings at the <strong>6th National Big Data Health Science Conference</strong></li>
+          <li>Designed an optimization framework for multi-level parking management — won <strong>Best Poster Award at IISE Northeastern Regional 2025</strong></li>
+        </ul>
+      </div>
+    </div>
 
+    <div class="xp reveal">
+      <div class="xp-when">Feb — May 2024<br>Remote</div>
+      <div>
+        <div class="xp-role">Backend Software Engineer · <a class="xp-org" href="https://www.missionswithmonty.com" target="_blank" rel="noopener" style="text-decoration:none;">Missions With Monty ↗</a></div>
+        <ul>
+          <li>Developed Node.js/Express APIs on PostgreSQL for an educational game platform used in real classrooms</li>
+          <li>Sustained <strong>sub-200ms latency under 500+ concurrent users</strong> through query design and indexing</li>
+          <li>Built backend services for real-time application workflows with a focus on reliability, scalability, and fault handling</li>
+          <li>Worked with cross-functional teams to translate product requirements into system-level implementations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-addr">0x08</span>
+      <h2 class="sec-title">Projects</h2>
+    </div>
+    <div class="proj-grid">
 
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3>AXI Hardware Accelerator</h3>
+          <span class="proj-domain">FPGA</span>
+        </div>
+        <p>Custom AXI4-Lite IP core with a pipelined complex multiplier on a Zynq FPGA — full hardware/software co-design with embedded C firmware, memory-mapped I/O, and UART interfaces.</p>
+        <div class="tags">
+          <span class="tag">Verilog</span><span class="tag">AXI4-Lite</span><span class="tag">Zynq</span><span class="tag">Embedded C</span>
+        </div>
+        <a class="proj-link" href="mailto:shauryachauhan1111@gmail.com?subject=Code%20request%3A%20AXI%20Accelerator">→ code available on request</a>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3>FPGA Signal Processing Pipeline</h3>
+          <span class="proj-domain">FPGA</span>
+        </div>
+        <p>FIR filter and CORDIC rotator built in Vitis HLS using a DATAFLOW architecture, with fixed-point optimization hitting &lt;0.3% error against floating point.</p>
+        <div class="tags">
+          <span class="tag">Vitis HLS</span><span class="tag">DSP</span><span class="tag">Fixed-Point</span>
+        </div>
+        <a class="proj-link" href="mailto:shauryachauhan1111@gmail.com?subject=Code%20request%3A%20FPGA%20DSP%20Pipeline">→ code available on request</a>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3>Out-of-Order Instruction Scheduler</h3>
+          <span class="proj-domain">Architecture</span>
+        </div>
+        <p>Cycle-accurate simulator of a 7-stage out-of-order pipeline with register renaming and reorder buffers.</p>
+        <div class="tags">
+          <span class="tag">C++</span><span class="tag">CPU Architecture</span><span class="tag">Simulation</span>
+        </div>
+        <a class="proj-link" href="mailto:shauryachauhan1111@gmail.com?subject=Code%20request%3A%20OoO%20Scheduler">→ code available on request</a>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3>Multi-Level Cache Simulator</h3>
+          <span class="proj-domain">Architecture</span>
+        </div>
+        <p>Trace-driven cache hierarchy simulator with configurable FIFO, LRU, and MRU eviction policies.</p>
+        <div class="tags">
+          <span class="tag">C</span><span class="tag">Caching</span><span class="tag">Trace-Driven Testing</span>
+        </div>
+        <a class="proj-link" href="mailto:shauryachauhan1111@gmail.com?subject=Code%20request%3A%20Cache%20Simulator">→ code available on request</a>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3>Dynamic Memory Allocator</h3>
+          <span class="proj-domain">Systems</span>
+        </div>
+        <p>Custom malloc, free, and realloc in C with block coalescing, heap validation, and serious quality time spent in GDB.</p>
+        <div class="tags">
+          <span class="tag">C</span><span class="tag">Memory Management</span><span class="tag">GDB</span>
+        </div>
+        <a class="proj-link" href="mailto:shauryachauhan1111@gmail.com?subject=Code%20request%3A%20Memory%20Allocator">→ code available on request</a>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3>Prediction Markets Data Pipeline</h3>
+          <span class="proj-domain">Research</span>
+        </div>
+        <p>Data pipeline exploring Polymarket prediction markets as alternative measures of financial uncertainty — feasibility and scalability work behind an ongoing working paper.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Data Pipelines</span><span class="tag">Finance</span>
+        </div>
+        <a class="proj-link" href="#research">→ see research</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-addr">0x0C</span>
+      <h2 class="sec-title">Research</h2>
+    </div>
+    <div class="res-grid">
+
+      <div class="res-item reveal">
+        <div class="res-kind">Working Paper</div>
+        <div>
+          <h3>Prediction Markets as Alternative Measures of Financial Uncertainty</h3>
+          <p>In progress with Dr. Emmanouil Pyrgiotakis (University College Dublin). Exploring Polymarket prediction market data as an alternative uncertainty measure, with a focus on data pipeline feasibility and scalability.</p>
+        </div>
+      </div>
+
+      <div class="res-item reveal">
+        <div class="res-kind">Conference</div>
+        <div>
+          <h3>6th National Big Data Health Science Conference</h3>
+          <p>Presented work on a modified PCA algorithm for high-dimensional healthcare datasets, developed with the Penn State Industrial Engineering department.</p>
+        </div>
+      </div>
+
+      <div class="res-item reveal">
+        <div class="res-kind">Award</div>
+        <div>
+          <h3>Best Poster Award — IISE Northeastern Regional Conference 2025</h3>
+          <p>Multi-Level Parking System Optimization: designed an optimization framework targeting space utilization and reduced search time for multi-level parking management, using simulation and system modeling techniques.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-addr">0x10</span>
+      <h2 class="sec-title">Skills</h2>
+    </div>
+    <p class="skills-note reveal">// laid out like a register map, because old habits die hard</p>
+    <div class="reg-map reveal">
+
+      <div class="reg">
+        <span class="reg-addr">0x00</span>
+        <span class="reg-name">Languages</span>
+        <div class="reg-bits">
+          <span class="tag">Python</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">JavaScript</span><span class="tag">SQL</span><span class="tag">R</span>
+        </div>
+      </div>
+
+      <div class="reg">
+        <span class="reg-addr">0x20</span>
+        <span class="reg-name">Hardware</span>
+        <div class="reg-bits">
+          <span class="tag">Verilog</span><span class="tag">Vitis HLS</span><span class="tag">Vivado</span><span class="tag">AXI</span><span class="tag">Zynq FPGA</span>
+        </div>
+      </div>
+
+      <div class="reg">
+        <span class="reg-addr">0x40</span>
+        <span class="reg-name">Systems</span>
+        <div class="reg-bits">
+          <span class="tag">Linux</span><span class="tag">GDB</span><span class="tag">Memory Management</span><span class="tag">OS Concepts</span>
+        </div>
+      </div>
+
+      <div class="reg">
+        <span class="reg-addr">0x60</span>
+        <span class="reg-name">Backend</span>
+        <div class="reg-bits">
+          <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="reg">
+        <span class="reg-addr">0x80</span>
+        <span class="reg-name">ML / Data</span>
+        <div class="reg-bits">
+          <span class="tag">scikit-learn</span><span class="tag">RAG</span><span class="tag">LLMs</span><span class="tag">Statistical Modeling</span>
+        </div>
+      </div>
+
+      <div class="reg">
+        <span class="reg-addr">0xA0</span>
+        <span class="reg-name">DevOps</span>
+        <div class="reg-bits">
+          <span class="tag">Docker</span><span class="tag">GitHub Actions</span><span class="tag">CI/CD</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-addr">0x14</span>
+      <h2 class="sec-title">Contact</h2>
+    </div>
+    <div class="contact-inner reveal">
+      <p>The fastest way to reach me is email. If you're hiring for new grad software or systems roles, I'd love to talk.</p>
+      <div class="contact-rows">
+        <a class="contact-row" href="mailto:shauryachauhan1111@gmail.com">
+          <span class="k">email</span> shauryachauhan1111@gmail.com
+        </a>
+        <a class="contact-row" href="https://linkedin.com/in/shaurya-chauhan10" target="_blank" rel="noopener">
+          <span class="k">linkedin</span> /in/shaurya-chauhan10
+        </a>
+        <a class="contact-row" href="https://github.com/shaw-dev" target="_blank" rel="noopener">
+          <span class="k">github</span> /shaw-dev
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Shaurya Chouhan</span>
+    <span>hand-built · no frameworks · view-source friendly</span>
+  </div>
+</footer>
+
+<script>
+// ---- boot sequence in hero (typed once, static if reduced motion) ----
+(function () {
+  const boot = document.getElementById('boot');
+  const lines = [
+    ['[ 0.000 ]', 'init shaw.dev'],
+    ['[ 0.014 ]', 'loading modules: systems, ml, backend, fpga'],
+    ['[ 0.031 ]', 'status: open to new grad roles']
+  ];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render(upTo, partial) {
+    boot.innerHTML = '';
+    lines.slice(0, upTo).forEach(([t, msg], i) => {
+      const span = document.createElement('span');
+      span.className = 'ln';
+      const isLast = i === upTo - 1;
+      const text = isLast && partial !== null ? msg.slice(0, partial) : msg;
+      span.innerHTML = '<span class="t">' + t + '</span> <span class="ok">' + text + '</span>';
+      if (isLast) span.innerHTML += '<span class="cursor"></span>';
+      boot.appendChild(span);
+    });
+  }
+
+  if (reduced) {
+    render(lines.length, null);
+    return;
+  }
+
+  let line = 0, ch = 0;
+  function tick() {
+    if (line >= lines.length) { render(lines.length, null); return; }
+    ch++;
+    if (ch > lines[line][1].length) { line++; ch = 0; setTimeout(tick, 220); return; }
+    render(line + 1, ch);
+    setTimeout(tick, 18);
+  }
+  tick();
+})();
+
+// ---- reveal on scroll ----
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
 </html>
